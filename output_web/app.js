@@ -197,7 +197,11 @@
   async function togglePlay() {
     if (!currentExercise() || els.playButton.disabled) return;
     if (els.player.paused) {
-      await els.player.play();
+      try {
+        await els.player.play();
+      } catch (error) {
+        els.playButton.textContent = "播放标准音频";
+      }
     } else {
       els.player.pause();
     }
