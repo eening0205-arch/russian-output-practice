@@ -46,6 +46,12 @@ class OutputWebStaticTests(unittest.TestCase):
         self.assertNotIn("Я сейчас немного занята", html)
         self.assertNotIn("Хорошо, договорились", html)
 
+    def test_index_cache_busts_changed_assets(self):
+        html = pathlib.Path("output_web/index.html").read_text(encoding="utf-8")
+
+        self.assertIn('styles.css?v=', html)
+        self.assertIn('app.js?v=', html)
+
 
 if __name__ == "__main__":
     unittest.main()
