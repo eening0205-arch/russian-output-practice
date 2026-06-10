@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>俄语输出练习</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p id="themeLabel" class="eyebrow">Output Practice</p>
+          <h1 id="packTitle">俄语输出练习</h1>
+        </div>
+        <div class="summary">
+          <span id="progressText">0 / 0</span>
+          <div class="meter" aria-hidden="true">
+            <span id="progressBar"></span>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="segment-pane" aria-label="练习列表">
+          <div class="pane-tools">
+            <button class="chip is-active" type="button" data-filter="all">全部</button>
+            <button class="chip" type="button" data-filter="todo">未练</button>
+            <button class="chip" type="button" data-filter="done">已练</button>
+          </div>
+          <ol id="exerciseList" class="segment-list"></ol>
+        </aside>
+
+        <section class="practice-pane" aria-live="polite">
+          <div class="segment-meta">
+            <span id="exerciseCounter">001</span>
+            <button id="doneButton" class="icon-text" type="button">标记已练</button>
+          </div>
+
+          <article class="prompt-panel">
+            <div class="panel-label">中文题目</div>
+            <p id="promptText" class="prompt-zh"></p>
+          </article>
+
+          <div class="attempt-panel">
+            <div class="recorder-head">
+              <span id="recordStatus">先开口说俄语，再看答案</span>
+              <div id="recordLight" class="record-light" aria-hidden="true"></div>
+            </div>
+            <div class="recorder-actions">
+              <button id="recordButton" class="icon-text" type="button">开始录音</button>
+              <button id="playRecordingButton" class="icon-text" type="button" disabled>
+                回放录音
+              </button>
+              <a id="downloadRecording" class="download-link is-disabled" href="#" download>
+                下载
+              </a>
+            </div>
+            <audio id="recordingPlayer" controls></audio>
+          </div>
+
+          <div class="answer-actions">
+            <button id="showKeywordsButton" class="icon-text" type="button">显示关键词</button>
+            <button id="showAnswerButton" class="primary-button" type="button">显示答案</button>
+          </div>
+
+          <article id="keywordPanel" class="keyword-panel" hidden>
+            <div class="panel-label">关键词</div>
+            <div id="keywordList" class="keyword-list"></div>
+          </article>
+
+          <article id="answerPanel" class="answer-panel" hidden>
+            <div class="panel-label">标准俄语</div>
+            <p id="answerText" class="answer-ru"></p>
+            <p id="explanationText" class="explanation-zh"></p>
+            <audio id="player" preload="metadata"></audio>
+          </article>
+
+          <div class="transport">
+            <button id="prevButton" class="icon-button" type="button" title="上一条" aria-label="上一条">
+              ‹
+            </button>
+            <button id="playButton" class="primary-button" type="button" disabled>
+              播放标准音频
+            </button>
+            <button id="nextButton" class="icon-button" type="button" title="下一条" aria-label="下一条">
+              ›
+            </button>
+          </div>
+
+          <div class="control-grid">
+            <label>
+              <span>速度</span>
+              <select id="speedSelect">
+                <option value="0.75">0.75x</option>
+                <option value="0.85" selected>0.85x</option>
+                <option value="1">1x</option>
+                <option value="1.1">1.1x</option>
+                <option value="1.25">1.25x</option>
+              </select>
+            </label>
+            <label class="toggle-row">
+              <input id="loopToggle" type="checkbox" checked />
+              <span>单条循环</span>
+            </label>
+            <label class="toggle-row">
+              <input id="autoNextToggle" type="checkbox" />
+              <span>自动下一条</span>
+            </label>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="practice.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
