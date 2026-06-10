@@ -4,11 +4,36 @@
   const baseStorageKey = (manifest && manifest.storageKey) || "russian-output-practice";
   const doneKey = `${baseStorageKey}-done-v1`;
   const speedKey = `${baseStorageKey}-speed-v1`;
+  const knownKey = `${baseStorageKey}-known-v1`;
+  const retryQueueKey = `${baseStorageKey}-retry-queue-v1`;
+  const exerciseIds = new Set(exercises.map((exercise) => exercise.id));
+
+  function readStoredArray(key) {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(key) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function cleanRetryQueue(ids, known) {
+    const seen = new Set();
+    return ids.filter((id) => {
+      if (!exerciseIds.has(id) || known.has(id) || seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    });
+  }
+
+  const storedKnown = new Set(readStoredArray(knownKey).filter((id) => exerciseIds.has(id)));
 
   const state = {
     currentIndex: 0,
     filter: "all",
     done: new Set(JSON.parse(localStorage.getItem(doneKey) || "[]")),
+    known: storedKnown,
+    retryQueue: cleanRetryQueue(readStoredArray(retryQueueKey), storedKnown),
     revealedAnswers: new Set(),
     revealedKeywords: new Set(),
     recordings: new Map(),
@@ -33,6 +58,9 @@
     keywordList: document.getElementById("keywordList"),
     showKeywordsButton: document.getElementById("showKeywordsButton"),
     showAnswerButton: document.getElementById("showAnswerButton"),
+    knowButton: document.getElementById("knowButton"),
+    unknownButton: document.getElementById("unknownButton"),
+    reviewQueueText: document.getElementById("reviewQueueText"),
     exerciseCounter: document.getElementById("exerciseCounter"),
     progressText: document.getElementById("progressText"),
     progressBar: document.getElementById("progressBar"),
@@ -51,6 +79,11 @@
 
   function saveDone() {
     localStorage.setItem(doneKey, JSON.stringify(Array.from(state.done)));
+  }
+
+  function saveAssessment() {
+    localStorage.setItem(knownKey, JSON.stringify(Array.from(state.known)));
+    localStorage.setItem(retryQueueKey, JSON.stringify(state.retryQueue));
   }
 
   function currentExercise() {
@@ -91,8 +124,10 @@
     Array.from(els.list.children).forEach((item, index) => {
       const exercise = exercises[index];
       const isDone = state.done.has(exercise.id);
+      const needsReview = state.retryQueue.includes(exercise.id);
       item.classList.toggle("is-active", index === state.currentIndex);
       item.classList.toggle("is-done", isDone);
+      item.classList.toggle("is-review", needsReview);
       item.classList.toggle(
         "is-hidden",
         (state.filter === "todo" && isDone) || (state.filter === "done" && !isDone),
@@ -106,6 +141,15 @@
     const ratio = total ? (doneCount / total) * 100 : 0;
     els.progressText.textContent = `${doneCount} / ${total}`;
     els.progressBar.style.width = `${ratio}%`;
+  }
+
+  function updateReviewQueueStatus() {
+    const exercise = currentExercise();
+    els.reviewQueueText.textContent = `复练 ${state.retryQueue.length}`;
+    if (exercise) {
+      els.knowButton.disabled = state.known.has(exercise.id);
+      els.unknownButton.disabled = false;
+    }
   }
 
   function updateRecordingControls() {
@@ -161,10 +205,16 @@
     }
   }
 
-  function selectExercise(index) {
+  function resetRevealFor(exerciseId) {
+    state.revealedAnswers.delete(exerciseId);
+    state.revealedKeywords.delete(exerciseId);
+  }
+
+  function selectExercise(index, options = {}) {
     if (!exercises[index]) return;
     state.currentIndex = index;
     const exercise = currentExercise();
+    if (options.resetReveal) resetRevealFor(exercise.id);
     els.exerciseCounter.textContent = exercise.id;
     els.promptText.textContent = exercise.prompt_zh;
     els.doneButton.textContent = state.done.has(exercise.id) ? "取消已练" : "标记已练";
@@ -172,11 +222,34 @@
     updateRevealState();
     updateRecordingControls();
     updateListState();
+    updateReviewQueueStatus();
   }
 
   function selectRelative(offset) {
+    if (offset > 0 && state.currentIndex === exercises.length - 1) {
+      const retryIndex = nextRetryIndex();
+      if (retryIndex !== -1) {
+        selectExercise(retryIndex, { resetReveal: true });
+        return;
+      }
+    }
     const nextIndex = Math.max(0, Math.min(exercises.length - 1, state.currentIndex + offset));
     selectExercise(nextIndex);
+  }
+
+  function nextRetryIndex() {
+    for (const id of state.retryQueue) {
+      const index = exercises.findIndex((exercise) => exercise.id === id);
+      if (index !== -1 && !state.known.has(id)) return index;
+    }
+    return -1;
+  }
+
+  function nextNewIndexAfterCurrent() {
+    for (let index = state.currentIndex + 1; index < exercises.length; index += 1) {
+      if (!state.known.has(exercises[index].id)) return index;
+    }
+    return -1;
   }
 
   function showKeywords() {
@@ -192,6 +265,55 @@
     state.revealedAnswers.add(exercise.id);
     state.revealedKeywords.add(exercise.id);
     updateRevealState();
+  }
+
+  function removeFromRetryQueue(exerciseId) {
+    state.retryQueue = state.retryQueue.filter((id) => id !== exerciseId);
+  }
+
+  function addToRetryQueue(exerciseId) {
+    if (!state.retryQueue.includes(exerciseId)) {
+      state.retryQueue.push(exerciseId);
+    }
+  }
+
+  function advanceAfterAssessment() {
+    const nextNewIndex = nextNewIndexAfterCurrent();
+    if (nextNewIndex !== -1) {
+      selectExercise(nextNewIndex);
+      return;
+    }
+
+    const retryIndex = nextRetryIndex();
+    if (retryIndex !== -1) {
+      selectExercise(retryIndex, { resetReveal: true });
+    } else {
+      updateReviewQueueStatus();
+    }
+  }
+
+  function markKnown() {
+    const exercise = currentExercise();
+    if (!exercise) return;
+    state.known.add(exercise.id);
+    removeFromRetryQueue(exercise.id);
+    setDone(exercise.id, true);
+    saveAssessment();
+    updateReviewQueueStatus();
+    updateListState();
+    advanceAfterAssessment();
+  }
+
+  function markUnknown() {
+    const exercise = currentExercise();
+    if (!exercise) return;
+    state.known.delete(exercise.id);
+    addToRetryQueue(exercise.id);
+    setDone(exercise.id, false);
+    showAnswer();
+    saveAssessment();
+    updateReviewQueueStatus();
+    updateListState();
   }
 
   async function togglePlay() {
@@ -269,6 +391,8 @@
   function bindEvents() {
     els.showKeywordsButton.addEventListener("click", showKeywords);
     els.showAnswerButton.addEventListener("click", showAnswer);
+    els.knowButton.addEventListener("click", markKnown);
+    els.unknownButton.addEventListener("click", markUnknown);
     els.playButton.addEventListener("click", togglePlay);
     els.prevButton.addEventListener("click", () => selectRelative(-1));
     els.nextButton.addEventListener("click", () => selectRelative(1));

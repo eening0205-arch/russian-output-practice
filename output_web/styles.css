@@ -203,6 +203,11 @@ h1 {
   content: "✓";
 }
 
+.segment-item.is-review:not(.is-done) .seg-check::before {
+  color: var(--gold);
+  content: "↻";
+}
+
 .practice-pane {
   display: grid;
   gap: 14px;
@@ -214,6 +219,7 @@ h1 {
 .recorder-actions,
 .transport,
 .answer-actions,
+.mastery-actions,
 .control-grid {
   display: flex;
   align-items: center;
@@ -293,12 +299,14 @@ h1 {
 
 .recorder-actions,
 .answer-actions,
+.mastery-actions,
 .transport,
 .control-grid {
   flex-wrap: wrap;
 }
 
 .answer-actions,
+.mastery-actions,
 .transport {
   justify-content: center;
 }
@@ -346,6 +354,22 @@ h1 {
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink);
+}
+
+.caution-button {
+  border-color: rgba(139, 111, 34, 0.34);
+  background: #fbf6e5;
+  color: #705817;
+}
+
+.review-queue {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 850;
 }
 
 .icon-button {
