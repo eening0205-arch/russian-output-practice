@@ -121,6 +121,18 @@ class OutputPracticeGeneratorTests(unittest.TestCase):
                 (out_dir / "practice.js").read_text(encoding="utf-8"),
             )
 
+    def test_real_weekly_pack_has_twenty_output_first_exercises(self):
+        weekly = load_weekly_exercises(
+            pathlib.Path("weekly_packs/daily_expression_2026-06-09.json")
+        )
+
+        self.assertEqual(weekly["theme"], "俄语日常表达")
+        self.assertEqual(len(weekly["exercises"]), 20)
+        self.assertEqual(
+            weekly["exercises"][0]["prompt_zh"], "我现在有点忙，晚点回复你。"
+        )
+        self.assertIn("answer_ru", weekly["exercises"][0])
+
 
 if __name__ == "__main__":
     unittest.main()
