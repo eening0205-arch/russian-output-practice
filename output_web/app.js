@@ -6,6 +6,7 @@
   const speedKey = `${baseStorageKey}-speed-v1`;
   const knownKey = `${baseStorageKey}-known-v1`;
   const retryQueueKey = `${baseStorageKey}-retry-queue-v1`;
+  const sentenceStatsKey = `${baseStorageKey}-sentence-stats-v1`;
   const exerciseIds = new Set(exercises.map((exercise) => exercise.id));
 
   function readStoredArray(key) {
@@ -26,6 +27,15 @@
     });
   }
 
+  function readStoredObject(key) {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(key) || "{}");
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
   const storedKnown = new Set(readStoredArray(knownKey).filter((id) => exerciseIds.has(id)));
 
   const state = {
@@ -34,6 +44,7 @@
     done: new Set(JSON.parse(localStorage.getItem(doneKey) || "[]")),
     known: storedKnown,
     retryQueue: cleanRetryQueue(readStoredArray(retryQueueKey), storedKnown),
+    stats: readStoredObject(sentenceStatsKey),
     revealedAnswers: new Set(),
     revealedKeywords: new Set(),
     recordings: new Map(),
@@ -75,6 +86,13 @@
     recordStatus: document.getElementById("recordStatus"),
     recordLight: document.getElementById("recordLight"),
     filterButtons: Array.from(document.querySelectorAll("[data-filter]")),
+    navButtons: Array.from(document.querySelectorAll("[data-view]")),
+    viewPanels: Array.from(document.querySelectorAll("[data-app-view]")),
+    reviewList: document.getElementById("reviewList"),
+    reviewCountText: document.getElementById("reviewCountText"),
+    libraryList: document.getElementById("libraryList"),
+    libraryStats: document.getElementById("libraryStats"),
+    installStatus: document.getElementById("installStatus"),
   };
 
   function saveDone() {
@@ -84,6 +102,45 @@
   function saveAssessment() {
     localStorage.setItem(knownKey, JSON.stringify(Array.from(state.known)));
     localStorage.setItem(retryQueueKey, JSON.stringify(state.retryQueue));
+  }
+
+  function saveStats() {
+    localStorage.setItem(sentenceStatsKey, JSON.stringify(state.stats));
+  }
+
+  function ensureSentenceStats(exerciseId) {
+    if (!state.stats[exerciseId]) {
+      state.stats[exerciseId] = {
+        status: "new",
+        knownCount: 0,
+        unknownCount: 0,
+        lastReviewedAt: "",
+      };
+    }
+    return state.stats[exerciseId];
+  }
+
+  function normalizeExistingStats() {
+    let changed = false;
+    state.retryQueue.forEach((exerciseId) => {
+      const stats = ensureSentenceStats(exerciseId);
+      if (!stats.unknownCount) {
+        stats.unknownCount = 1;
+        changed = true;
+      }
+      if (stats.status !== "reviewing") {
+        stats.status = "reviewing";
+        changed = true;
+      }
+    });
+    state.known.forEach((exerciseId) => {
+      const stats = ensureSentenceStats(exerciseId);
+      if (stats.status === "new") {
+        stats.status = "known";
+        changed = true;
+      }
+    });
+    if (changed) saveStats();
   }
 
   function currentExercise() {
@@ -177,6 +234,108 @@
       chip.textContent = keyword;
       els.keywordList.appendChild(chip);
     });
+  }
+
+  function exerciseById(exerciseId) {
+    return exercises.find((exercise) => exercise.id === exerciseId);
+  }
+
+  function createSentenceCard(exercise, metaText, resetReveal) {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "sentence-card";
+    card.addEventListener("click", () => {
+      const index = exercises.findIndex((item) => item.id === exercise.id);
+      if (index !== -1) selectExercise(index, { resetReveal });
+      activateView("practice");
+    });
+
+    const prompt = document.createElement("strong");
+    prompt.textContent = exercise.prompt_zh;
+
+    const answer = document.createElement("span");
+    answer.textContent = exercise.answer_ru;
+
+    const meta = document.createElement("span");
+    meta.textContent = metaText;
+
+    card.append(prompt, answer, meta);
+    return card;
+  }
+
+  function renderReviewView() {
+    els.reviewList.innerHTML = "";
+    els.reviewCountText.textContent = `复练 ${state.retryQueue.length}`;
+
+    if (!state.retryQueue.length) {
+      const empty = document.createElement("p");
+      empty.className = "settings-text";
+      empty.textContent = "现在没有需要复练的句子。";
+      els.reviewList.appendChild(empty);
+      return;
+    }
+
+    state.retryQueue.forEach((exerciseId) => {
+      const exercise = exerciseById(exerciseId);
+      if (!exercise) return;
+      const stats = ensureSentenceStats(exerciseId);
+      els.reviewList.appendChild(
+        createSentenceCard(exercise, `不知道 ${stats.unknownCount || 0} 次`, true),
+      );
+    });
+  }
+
+  function renderLibraryView() {
+    els.libraryList.innerHTML = "";
+    const knownCount = state.known.size;
+    const reviewCount = state.retryQueue.length;
+    const unknownCount = exercises.filter((exercise) => {
+      const stats = state.stats[exercise.id];
+      return stats && stats.unknownCount > 0;
+    }).length;
+
+    els.libraryStats.innerHTML = "";
+    [
+      `知道 ${knownCount}`,
+      `复练中 ${reviewCount}`,
+      `点过不知道 ${unknownCount}`,
+    ].forEach((text) => {
+      const pill = document.createElement("span");
+      pill.className = "stat-pill";
+      pill.textContent = text;
+      els.libraryStats.appendChild(pill);
+    });
+
+    exercises.forEach((exercise) => {
+      const stats = ensureSentenceStats(exercise.id);
+      const status = state.retryQueue.includes(exercise.id)
+        ? "复练中"
+        : state.known.has(exercise.id)
+          ? "知道"
+          : "未练";
+      const meta = `${status} · 不知道 ${stats.unknownCount || 0} 次`;
+      els.libraryList.appendChild(createSentenceCard(exercise, meta, false));
+    });
+  }
+
+  function renderSettingsView() {
+    const standalone = window.matchMedia("(display-mode: standalone)").matches;
+    els.installStatus.textContent = standalone
+      ? "已经以程序模式打开。"
+      : "在手机浏览器分享菜单里选择“添加到主屏幕”。";
+  }
+
+  function activateView(viewName) {
+    els.viewPanels.forEach((panel) => {
+      panel.hidden = panel.dataset.appView !== viewName;
+    });
+    els.navButtons.forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.view === viewName);
+    });
+
+    if (viewName === "review") renderReviewView();
+    if (viewName === "library") renderLibraryView();
+    if (viewName === "settings") renderSettingsView();
   }
 
   function updateRevealState() {
@@ -295,10 +454,15 @@
   function markKnown() {
     const exercise = currentExercise();
     if (!exercise) return;
+    const stats = ensureSentenceStats(exercise.id);
+    stats.status = "known";
+    stats.knownCount += 1;
+    stats.lastReviewedAt = new Date().toISOString();
     state.known.add(exercise.id);
     removeFromRetryQueue(exercise.id);
     setDone(exercise.id, true);
     saveAssessment();
+    saveStats();
     updateReviewQueueStatus();
     updateListState();
     advanceAfterAssessment();
@@ -307,11 +471,16 @@
   function markUnknown() {
     const exercise = currentExercise();
     if (!exercise) return;
+    const stats = ensureSentenceStats(exercise.id);
+    stats.status = "reviewing";
+    stats.unknownCount += 1;
+    stats.lastReviewedAt = new Date().toISOString();
     state.known.delete(exercise.id);
     addToRetryQueue(exercise.id);
     setDone(exercise.id, false);
     showAnswer();
     saveAssessment();
+    saveStats();
     updateReviewQueueStatus();
     updateListState();
   }
@@ -436,6 +605,9 @@
         updateListState();
       });
     });
+    els.navButtons.forEach((button) => {
+      button.addEventListener("click", () => activateView(button.dataset.view));
+    });
     els.recordButton.addEventListener("click", async () => {
       try {
         if (state.mediaRecorder) {
@@ -465,6 +637,11 @@
     });
   }
 
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  }
+
   function init() {
     if (manifest) {
       els.packTitle.textContent = manifest.title || "俄语输出练习";
@@ -479,10 +656,13 @@
     }
     const savedSpeed = localStorage.getItem(speedKey);
     if (savedSpeed) els.speedSelect.value = savedSpeed;
+    normalizeExistingStats();
     bindEvents();
     renderList();
     updateProgress();
     selectExercise(0);
+    activateView("practice");
+    registerServiceWorker();
   }
 
   init();

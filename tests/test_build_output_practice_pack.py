@@ -6,6 +6,7 @@ import unittest
 
 from build_output_practice_pack import (
     build_manifest,
+    copy_web_assets,
     load_weekly_exercises,
     load_wordbook_csv,
     normalize_word,
@@ -120,6 +121,28 @@ class OutputPracticeGeneratorTests(unittest.TestCase):
                 "window.OUTPUT_PRACTICE =",
                 (out_dir / "practice.js").read_text(encoding="utf-8"),
             )
+
+    def test_copy_web_assets_copies_nested_icon_directory(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project_dir = pathlib.Path(tmp) / "project"
+            out_dir = pathlib.Path(tmp) / "out"
+            icon_dir = project_dir / "output_web" / "icons"
+            icon_dir.mkdir(parents=True)
+            (project_dir / "output_web" / "index.html").write_text(
+                "<html></html>", encoding="utf-8"
+            )
+            (project_dir / "output_web" / "practice.js").write_text(
+                "window.OUTPUT_PRACTICE = {};",
+                encoding="utf-8",
+            )
+            (icon_dir / "icon.svg").write_text("<svg></svg>", encoding="utf-8")
+            out_dir.mkdir()
+
+            copy_web_assets(project_dir, out_dir)
+
+            self.assertTrue((out_dir / "index.html").exists())
+            self.assertTrue((out_dir / "icons" / "icon.svg").exists())
+            self.assertFalse((out_dir / "practice.js").exists())
 
     def test_real_weekly_pack_has_twenty_output_first_exercises(self):
         weekly = load_weekly_exercises(

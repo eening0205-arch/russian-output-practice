@@ -3,8 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#23694b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="俄语练习" />
     <title>俄语输出练习</title>
-    <link rel="stylesheet" href="styles.css?v=20260610-review-flow" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="stylesheet" href="styles.css?v=20260611-pwa2" />
   </head>
   <body>
     <div class="app-shell">
@@ -21,7 +28,7 @@
         </div>
       </header>
 
-      <main class="workspace">
+      <main id="practiceView" class="workspace app-view" data-app-view="practice">
         <aside class="segment-pane" aria-label="练习列表">
           <div class="pane-tools">
             <button class="chip is-active" type="button" data-filter="all">全部</button>
@@ -118,9 +125,57 @@
           </div>
         </section>
       </main>
+
+      <section id="reviewView" class="app-view app-panel" data-app-view="review" hidden>
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Review</p>
+            <h2>复练</h2>
+          </div>
+          <span id="reviewCountText" class="review-queue">复练 0</span>
+        </div>
+        <div id="reviewList" class="sentence-list"></div>
+      </section>
+
+      <section id="libraryView" class="app-view app-panel" data-app-view="library" hidden>
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Library</p>
+            <h2>句子总库</h2>
+          </div>
+          <div id="libraryStats" class="library-stats"></div>
+        </div>
+        <div id="libraryList" class="sentence-list"></div>
+      </section>
+
+      <section id="settingsView" class="app-view app-panel" data-app-view="settings" hidden>
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h2>设置</h2>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div>
+            <span class="panel-label">安装</span>
+            <p id="installStatus" class="settings-text">可以在手机浏览器里添加到主屏幕。</p>
+          </div>
+          <div>
+            <span class="panel-label">离线</span>
+            <p class="settings-text">程序会缓存练习页面、数据和标准发音。</p>
+          </div>
+        </div>
+      </section>
+
+      <nav id="appNav" class="bottom-nav" aria-label="程序导航">
+        <button class="nav-button is-active" type="button" data-view="practice">练习</button>
+        <button class="nav-button" type="button" data-view="review">复练</button>
+        <button class="nav-button" type="button" data-view="library">总库</button>
+        <button class="nav-button" type="button" data-view="settings">设置</button>
+      </nav>
     </div>
 
     <script src="practice.js"></script>
-    <script src="app.js?v=20260610-review-flow"></script>
+    <script src="app.js?v=20260611-pwa2"></script>
   </body>
 </html>

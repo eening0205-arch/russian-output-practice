@@ -134,8 +134,13 @@ def copy_web_assets(project_dir, out_dir):
         raise FileNotFoundError(f"missing web asset directory: {web_src}")
     out_dir = Path(out_dir)
     for source in web_src.iterdir():
-        if source.is_file() and source.name != "practice.js":
-            shutil.copy2(source, out_dir / source.name)
+        if source.name == "practice.js":
+            continue
+        destination = out_dir / source.name
+        if source.is_dir():
+            shutil.copytree(source, destination, dirs_exist_ok=True)
+        elif source.is_file():
+            shutil.copy2(source, destination)
 
 
 def write_manifest(out_dir, manifest):
