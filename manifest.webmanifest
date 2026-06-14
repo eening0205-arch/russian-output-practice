@@ -1,0 +1,26 @@
+{
+  "name": "俄语输出练习",
+  "short_name": "俄语练习",
+  "description": "中文提示到俄语输出的练习程序，支持复练、句子总库和离线缓存。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f6f1",
+  "theme_color": "#23694b",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

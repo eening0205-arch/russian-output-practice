@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="俄语练习图标">
+  <rect width="512" height="512" rx="96" fill="#23694b"/>
+  <circle cx="256" cy="232" r="142" fill="#f7f6f1"/>
+  <path d="M153 345c44 36 162 36 206 0" fill="none" stroke="#8b6f22" stroke-width="28" stroke-linecap="round"/>
+  <path d="M179 202h154c37 0 62 25 62 59 0 36-25 59-64 59h-79v-48h71c13 0 22-6 22-17 0-10-9-16-22-16H229v81h-50V202z" fill="#23694b"/>
+  <circle cx="356" cy="158" r="28" fill="#b94737"/>
+</svg>

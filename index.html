@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#23694b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="俄语练习" />
+    <title>俄语输出练习</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="stylesheet" href="styles.css?v=20260611-pwa2" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p id="themeLabel" class="eyebrow">Output Practice</p>
+          <h1 id="packTitle">俄语输出练习</h1>
+        </div>
+        <div class="summary">
+          <span id="progressText">0 / 0</span>
+          <div class="meter" aria-hidden="true">
+            <span id="progressBar"></span>
+          </div>
+        </div>
+      </header>
+
+      <main id="practiceView" class="workspace app-view" data-app-view="practice">
+        <aside class="segment-pane" aria-label="练习列表">
+          <div class="pane-tools">
+            <button class="chip is-active" type="button" data-filter="all">全部</button>
+            <button class="chip" type="button" data-filter="todo">未练</button>
+            <button class="chip" type="button" data-filter="done">已练</button>
+          </div>
+          <ol id="exerciseList" class="segment-list"></ol>
+        </aside>
+
+        <section class="practice-pane" aria-live="polite">
+          <div class="segment-meta">
+            <span id="exerciseCounter">001</span>
+            <button id="doneButton" class="icon-text" type="button">标记已练</button>
+          </div>
+
+          <article class="prompt-panel">
+            <div class="panel-label">中文题目</div>
+            <p id="promptText" class="prompt-zh"></p>
+          </article>
+
+          <div class="attempt-panel">
+            <div class="recorder-head">
+              <span id="recordStatus">先开口说俄语，再看答案</span>
+              <div id="recordLight" class="record-light" aria-hidden="true"></div>
+            </div>
+            <div class="recorder-actions">
+              <button id="recordButton" class="icon-text" type="button">开始录音</button>
+              <button id="playRecordingButton" class="icon-text" type="button" disabled>
+                回放录音
+              </button>
+              <a id="downloadRecording" class="download-link is-disabled" href="#" download>
+                下载
+              </a>
+            </div>
+            <audio id="recordingPlayer" controls></audio>
+          </div>
+
+          <div class="answer-actions">
+            <button id="showKeywordsButton" class="icon-text" type="button">显示关键词</button>
+            <button id="showAnswerButton" class="primary-button" type="button">显示答案</button>
+          </div>
+
+          <div class="mastery-actions">
+            <button id="unknownButton" class="icon-text caution-button" type="button">
+              不知道
+            </button>
+            <button id="knowButton" class="primary-button" type="button">知道</button>
+            <span id="reviewQueueText" class="review-queue">复练 0</span>
+          </div>
+
+          <article id="keywordPanel" class="keyword-panel" hidden>
+            <div class="panel-label">关键词</div>
+            <div id="keywordList" class="keyword-list"></div>
+          </article>
+
+          <article id="answerPanel" class="answer-panel" hidden>
+            <div class="panel-label">标准俄语</div>
+            <p id="answerText" class="answer-ru"></p>
+            <p id="explanationText" class="explanation-zh"></p>
+            <audio id="player" preload="metadata"></audio>
+          </article>
+
+          <div class="transport">
+            <button id="prevButton" class="icon-button" type="button" title="上一条" aria-label="上一条">
+              ‹
+            </button>
+            <button id="playButton" class="primary-button" type="button" disabled>
+              播放标准音频
+            </button>
+            <button id="nextButton" class="icon-button" type="button" title="下一条" aria-label="下一条">
+              ›
+            </button>
+          </div>
+
+          <div class="control-grid">
+            <label>
+              <span>速度</span>
+              <select id="speedSelect">
+                <option value="0.75">0.75x</option>
+                <option value="0.85" selected>0.85x</option>
+                <option value="1">1x</option>
+                <option value="1.1">1.1x</option>
+                <option value="1.25">1.25x</option>
+              </select>
+            </label>
+            <label class="toggle-row">
+              <input id="loopToggle" type="checkbox" checked />
+              <span>单条循环</span>
+            </label>
+            <label class="toggle-row">
+              <input id="autoNextToggle" type="checkbox" />
+              <span>自动下一条</span>
+            </label>
+          </div>
+        </section>
+      </main>
+
+      <section id="reviewView" class="app-view app-panel" data-app-view="review" hidden>
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Review</p>
+            <h2>复练</h2>
+          </div>
+          <span id="reviewCountText" class="review-queue">复练 0</span>
+        </div>
+        <div id="reviewList" class="sentence-list"></div>
+      </section>
+
+      <section id="libraryView" class="app-view app-panel" data-app-view="library" hidden>
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Library</p>
+            <h2>句子总库</h2>
+          </div>
+          <div id="libraryStats" class="library-stats"></div>
+        </div>
+        <div id="libraryList" class="sentence-list"></div>
+      </section>
+
+      <section id="settingsView" class="app-view app-panel" data-app-view="settings" hidden>
+        <div class="view-head">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h2>设置</h2>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <div>
+            <span class="panel-label">安装</span>
+            <p id="installStatus" class="settings-text">可以在手机浏览器里添加到主屏幕。</p>
+          </div>
+          <div>
+            <span class="panel-label">离线</span>
+            <p class="settings-text">程序会缓存练习页面、数据和标准发音。</p>
+          </div>
+        </div>
+      </section>
+
+      <nav id="appNav" class="bottom-nav" aria-label="程序导航">
+        <button class="nav-button is-active" type="button" data-view="practice">练习</button>
+        <button class="nav-button" type="button" data-view="review">复练</button>
+        <button class="nav-button" type="button" data-view="library">总库</button>
+        <button class="nav-button" type="button" data-view="settings">设置</button>
+      </nav>
+    </div>
+
+    <script src="practice.js?v=20260614-daily"></script>
+    <script src="app.js?v=20260611-pwa2"></script>
+  </body>
+</html>

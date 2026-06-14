@@ -1,0 +1,695 @@
+{
+  "title": "俄语输出练习",
+  "mode": "output-first",
+  "theme": "俄语日常表达：安排、确认和请求",
+  "week": "2026-06-14",
+  "voice": "ru-RU-DmitryNeural",
+  "rate": "-15%",
+  "storageKey": "russian-output-practice-2026-06-14",
+  "exercises": [
+    {
+      "id": "001",
+      "prompt_zh": "我今天想早点出门。",
+      "answer_ru": "Я сегодня хочу выйти пораньше.",
+      "keywords": [
+        "сегодня",
+        "хочу",
+        "выйти"
+      ],
+      "explanation_zh": "хочу выйти 表示我想出去；пораньше 是早点，日常安排里很常用。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "сегодня",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "хочу",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "выйти",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/001.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "002",
+      "prompt_zh": "你现在方便说话吗？",
+      "answer_ru": "Тебе сейчас удобно говорить?",
+      "keywords": [
+        "сейчас",
+        "удобно",
+        "говорить"
+      ],
+      "explanation_zh": "熟人之间可以用 тебе；如果要更礼貌，可以说 Вам сейчас удобно говорить?",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "67f07a52a34a4b79fc8a7162",
+          "word": "удобно",
+          "translation": "方便地",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "сейчас",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "говорить",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/002.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "003",
+      "prompt_zh": "我可能会晚十分钟。",
+      "answer_ru": "Я, возможно, опоздаю на десять минут.",
+      "keywords": [
+        "возможно",
+        "опоздаю",
+        "десять минут"
+      ],
+      "explanation_zh": "опоздаю 表示我会迟到；на десять минут 表示迟到十分钟。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "возможно",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "опоздаю",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "десять минут",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/003.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "004",
+      "prompt_zh": "我已经在路上了。",
+      "answer_ru": "Я уже в дороге.",
+      "keywords": [
+        "уже",
+        "дороге"
+      ],
+      "explanation_zh": "в дороге 是在路上，短句很自然，适合回复别人催问。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "уже",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "дороге",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/004.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "005",
+      "prompt_zh": "你到的时候给我写一下。",
+      "answer_ru": "Напиши мне, когда будешь на месте.",
+      "keywords": [
+        "напиши",
+        "мне",
+        "место"
+      ],
+      "explanation_zh": "на месте 表示到地方、到现场；напиши мне 是给我写一下。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "680bc7178f5c603fa697fe23",
+          "word": "мне",
+          "translation": "我（用于表示第一人称单数的与格形式）",
+          "partOfSpeech": "代词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "68d81c0f1c203d5a416c5bfe",
+          "word": "место",
+          "translation": "地方, 位置, 场所",
+          "partOfSpeech": "名词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "напиши",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/005.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "006",
+      "prompt_zh": "我在门口等你。",
+      "answer_ru": "Я жду тебя у двери.",
+      "keywords": [
+        "жду",
+        "тебя",
+        "дверь"
+      ],
+      "explanation_zh": "у двери 是在门旁边、门口；жду тебя 是我等你。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "67e1d44631731c30f8dce58b",
+          "word": "дверь",
+          "translation": "门",
+          "partOfSpeech": "名词",
+          "difficulty": "medium"
+        },
+        {
+          "wordId": "",
+          "word": "жду",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "тебя",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/006.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "007",
+      "prompt_zh": "可以再说一遍吗？",
+      "answer_ru": "Можно повторить ещё раз?",
+      "keywords": [
+        "можно",
+        "повторить",
+        "ещё раз"
+      ],
+      "explanation_zh": "можно 加不定式可以礼貌地提出请求；ещё раз 是再一次。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "9c606265-2c43-49df-8f29-ad9c35f2d790",
+          "word": "можно",
+          "translation": "可以, 允许",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "повторить",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "ещё раз",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/007.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "008",
+      "prompt_zh": "我没听清楚。",
+      "answer_ru": "Я не расслышала.",
+      "keywords": [
+        "не расслышала"
+      ],
+      "explanation_zh": "女性说 расслышала；男性说 расслышал。意思是没听清，不是完全没听见。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "не расслышала",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/008.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "009",
+      "prompt_zh": "我差不多准备好了。",
+      "answer_ru": "Я почти готова.",
+      "keywords": [
+        "почти",
+        "готова"
+      ],
+      "explanation_zh": "女性说 готова；男性说 готов。почти 表示差不多、几乎。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "67f07ad8117fb603c9cf4a98",
+          "word": "почти",
+          "translation": "几乎",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "готова",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/009.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "010",
+      "prompt_zh": "给我一点时间。",
+      "answer_ru": "Дай мне немного времени.",
+      "keywords": [
+        "мне",
+        "немного",
+        "время"
+      ],
+      "explanation_zh": "немного времени 是一点时间；熟人之间用 дай，更礼貌可以说 дайте。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "680bc7178f5c603fa697fe23",
+          "word": "мне",
+          "translation": "我（用于表示第一人称单数的与格形式）",
+          "partOfSpeech": "代词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "69be8898-6ae3-45bc-a620-d59d5fb70136",
+          "word": "время",
+          "translation": "时间",
+          "partOfSpeech": "名词",
+          "difficulty": "medium"
+        },
+        {
+          "wordId": "",
+          "word": "немного",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/010.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "011",
+      "prompt_zh": "这个问题我们之后再决定。",
+      "answer_ru": "Этот вопрос мы решим позже.",
+      "keywords": [
+        "вопрос",
+        "решим",
+        "позже"
+      ],
+      "explanation_zh": "решим 表示我们会决定、会解决；позже 是晚点、之后。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "вопрос",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "решим",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "позже",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/011.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "012",
+      "prompt_zh": "我不确定，但可以试试。",
+      "answer_ru": "Я не уверена, но можно попробовать.",
+      "keywords": [
+        "не уверена",
+        "можно",
+        "попробовать"
+      ],
+      "explanation_zh": "女性说 уверена；男性说 уверен。можно попробовать 是可以试试。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "9c606265-2c43-49df-8f29-ad9c35f2d790",
+          "word": "можно",
+          "translation": "可以, 允许",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "не уверена",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "попробовать",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/012.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "013",
+      "prompt_zh": "您说得对。",
+      "answer_ru": "Вы правы.",
+      "keywords": [
+        "вы",
+        "правы"
+      ],
+      "explanation_zh": "Вы правы 是礼貌表达，表示您是对的、您说得对。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "вы",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "правы",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/013.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "014",
+      "prompt_zh": "我先看看，然后告诉你。",
+      "answer_ru": "Я сначала посмотрю, потом скажу тебе.",
+      "keywords": [
+        "сначала",
+        "посмотрю",
+        "потом"
+      ],
+      "explanation_zh": "сначала... потом... 表示先……然后……，适合描述处理顺序。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "68e5118e1c203d5a419550dd",
+          "word": "Сначала",
+          "translation": "首先",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "посмотрю",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "потом",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/014.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "015",
+      "prompt_zh": "今天不太合适，明天可以。",
+      "answer_ru": "Сегодня не очень удобно, завтра можно.",
+      "keywords": [
+        "сегодня",
+        "завтра",
+        "можно"
+      ],
+      "explanation_zh": "не очень удобно 是不太方便；завтра можно 是明天可以。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "9c606265-2c43-49df-8f29-ad9c35f2d790",
+          "word": "можно",
+          "translation": "可以, 允许",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "сегодня",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "завтра",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/015.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "016",
+      "prompt_zh": "我马上回来。",
+      "answer_ru": "Я сейчас вернусь.",
+      "keywords": [
+        "сейчас",
+        "вернусь"
+      ],
+      "explanation_zh": "сейчас вернусь 是非常常见的口语，表示我马上回来。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "",
+          "word": "сейчас",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "вернусь",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/016.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "017",
+      "prompt_zh": "我忘了带钥匙。",
+      "answer_ru": "Я забыла взять ключи.",
+      "keywords": [
+        "забыла",
+        "взять",
+        "ключи"
+      ],
+      "explanation_zh": "女性说 забыла；男性说 забыл。взять ключи 是带钥匙。",
+      "difficulty": "medium",
+      "source_words": [
+        {
+          "wordId": "680121123f81e43d5fa10a09",
+          "word": "взять",
+          "translation": "拿，取，带走，接受，获得",
+          "partOfSpeech": "动词",
+          "difficulty": "medium"
+        },
+        {
+          "wordId": "",
+          "word": "забыла",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "ключи",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/017.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "018",
+      "prompt_zh": "我可以坐这里吗？",
+      "answer_ru": "Можно здесь сесть?",
+      "keywords": [
+        "можно",
+        "здесь",
+        "сесть"
+      ],
+      "explanation_zh": "在公共场合询问能不能坐这里时，这句话很简洁自然。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "9c606265-2c43-49df-8f29-ad9c35f2d790",
+          "word": "можно",
+          "translation": "可以, 允许",
+          "partOfSpeech": "副词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "здесь",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        },
+        {
+          "wordId": "",
+          "word": "сесть",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/018.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "019",
+      "prompt_zh": "你能帮我一下吗？",
+      "answer_ru": "Можешь мне помочь?",
+      "keywords": [
+        "можешь",
+        "мне",
+        "помочь"
+      ],
+      "explanation_zh": "熟人之间用 можешь；更礼貌可以说 Вы можете мне помочь?",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "68c9204d9d67ec36896abf0b",
+          "word": "Можешь",
+          "translation": "能，可以",
+          "partOfSpeech": "动词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "680bc7178f5c603fa697fe23",
+          "word": "мне",
+          "translation": "我（用于表示第一人称单数的与格形式）",
+          "partOfSpeech": "代词",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "помочь",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/019.mp3",
+      "initially_revealed": false
+    },
+    {
+      "id": "020",
+      "prompt_zh": "没关系，下次吧。",
+      "answer_ru": "Ничего страшного, в следующий раз.",
+      "keywords": [
+        "ничего страшного",
+        "следующий раз"
+      ],
+      "explanation_zh": "ничего страшного 表示没关系、不要紧；в следующий раз 是下次。",
+      "difficulty": "easy",
+      "source_words": [
+        {
+          "wordId": "f18e9c73-ec7f-4f4d-8bb8-67872432ff04",
+          "word": "ничего страшного",
+          "translation": "没关系，没什么大不了",
+          "partOfSpeech": "短语",
+          "difficulty": "easy"
+        },
+        {
+          "wordId": "",
+          "word": "следующий раз",
+          "translation": "",
+          "partOfSpeech": "",
+          "difficulty": ""
+        }
+      ],
+      "audio": "audio/020.mp3",
+      "initially_revealed": false
+    }
+  ]
+}
