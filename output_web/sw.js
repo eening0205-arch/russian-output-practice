@@ -1,10 +1,10 @@
-const CACHE_NAME = "russian-output-practice-v20260611-pwa2";
+const CACHE_NAME = "russian-output-practice-v20260614-daily";
 const CORE_ASSETS = [
   "./",
   "index.html",
   "styles.css?v=20260611-pwa2",
   "app.js?v=20260611-pwa2",
-  "practice.js",
+  "practice.js?v=20260614-daily",
   "manifest.webmanifest",
   "offline.html",
   "data/practice.json",

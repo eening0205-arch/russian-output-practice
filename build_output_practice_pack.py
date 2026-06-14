@@ -19,6 +19,9 @@ REQUIRED_EXERCISE_FIELDS = {
     "explanation_zh",
     "difficulty",
 }
+TTS_MAX_ATTEMPTS = 3
+TTS_RETRY_DELAY_SECONDS = 2
+TTS_SAVE_TIMEOUT_SECONDS = 30
 
 
 def normalize_word(text):
@@ -164,16 +167,36 @@ async def synthesize_exercise_audio(exercises, audio_dir, voice, rate, overwrite
     audio_dir.mkdir(parents=True, exist_ok=True)
     for exercise in exercises:
         output_path = audio_dir / f"{exercise['id']}.mp3"
-        if output_path.exists() and not overwrite:
+        if output_path.exists() and output_path.stat().st_size > 0 and not overwrite:
             print(f"skip existing {output_path.name}")
             continue
-        print(f"generate {output_path.name}")
-        communicate = edge_tts.Communicate(
-            strip_stress_marks_for_tts(exercise["answer_ru"]),
-            voice=voice,
-            rate=rate,
-        )
-        await communicate.save(str(output_path))
+        if output_path.exists() and output_path.stat().st_size == 0:
+            output_path.unlink()
+        for attempt in range(1, TTS_MAX_ATTEMPTS + 1):
+            print(f"generate {output_path.name}")
+            try:
+                communicate = edge_tts.Communicate(
+                    strip_stress_marks_for_tts(exercise["answer_ru"]),
+                    voice=voice,
+                    rate=rate,
+                )
+                await asyncio.wait_for(
+                    communicate.save(str(output_path)),
+                    timeout=TTS_SAVE_TIMEOUT_SECONDS,
+                )
+                if not output_path.exists() or output_path.stat().st_size == 0:
+                    raise RuntimeError(f"empty audio file: {output_path.name}")
+                break
+            except Exception:
+                if output_path.exists():
+                    output_path.unlink()
+                if attempt == TTS_MAX_ATTEMPTS:
+                    raise
+                print(
+                    f"retry {output_path.name} "
+                    f"({attempt + 1}/{TTS_MAX_ATTEMPTS})"
+                )
+                await asyncio.sleep(TTS_RETRY_DELAY_SECONDS)
 
 
 def parse_args():

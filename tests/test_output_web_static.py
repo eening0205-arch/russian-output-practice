@@ -50,6 +50,7 @@ class OutputWebStaticTests(unittest.TestCase):
         html = pathlib.Path("output_web/index.html").read_text(encoding="utf-8")
 
         self.assertIn('styles.css?v=', html)
+        self.assertIn('practice.js?v=', html)
         self.assertIn('app.js?v=', html)
 
 
